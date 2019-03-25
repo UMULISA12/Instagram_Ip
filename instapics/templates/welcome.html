@@ -1,0 +1,50 @@
+{% extends 'all-photos/base.html' %}
+{% block content %}
+{{block.super}}
+<div class="container-fluid">
+  <h1 style="text-align:center; color:#4d004d;    font-family: 'Margarine', cursive; height: 50px; border: 1px solid white; margin-left: 600px; margin-right: 600px;">Welcome to instagram</h1>
+  <hr>
+  <br>
+  <div class="row">
+    {% for image in images %}
+    <div class="col-md-3 container" >
+        <img style="height:250px; width:400px; border-radius:5px; margin-left:15px; margin-right: 15px; margin-bottom: 30px"src="{{image.image.url}}" class="img-rounded" alt="Image" data-toggle="modal" data-target="#{{image.id}}"><br>
+
+     
+     <div class="modal fade bd-example-modal-lg" id="{{image.id}}"  role="dialog" aria-labelledby="imageTitle" aria-hidden="true">
+    
+      <div style="max-width:90%; max-height:50%; padding-top:100px;" class="modal-dialog modal-dialog-centered" role="document">
+
+          
+
+         <div class="modal-content">
+           <div class="modal-header">
+             <h2 class="modal-title" id="imageTitle"><b>{{image.image_name}}</b></h2>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+             <img src="{{image.image.url}}" style=" margin-right:auto;"class="img-fluid" alt="Image" width="500px" height="600px">
+             <br>
+             <b>Description:</b> {{image.image_description}}<br>
+             <b>image url:</b> {{image.image.url}}<br>
+             <b>image is taken from:</b> {{image.image_location}}<br>
+             <b>image category:</b> {{image.image_category}}
+           </div>
+
+           <div class="modal-footer">
+            <input class="form-control input-lg" type="text"  value="https://alicephoto.herokuapp.com{{image.image.url}}" id="{{image}}-url" >
+             <button class="btn btn-outline-info" value="https://alicephoto.herokuapp.com{{image.image.url}}" onclick="copyUrl('{{image.id}}-url')">Copy image url</button>
+          </div>
+         </div>
+       </div>
+     </div>
+
+   </div>
+   {% empty %}
+       <h3 class="text-center">There are No Images</h3>
+   {% endfor %}
+ </div>
+</div>
+{% endblock %}
