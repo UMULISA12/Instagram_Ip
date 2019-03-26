@@ -7,35 +7,43 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required(login_url='/accounts/register/')
+
+
 def welcome(request):
-    images = Image.objects.all()
-    locations=Location.objects.all()
+    title = 'Welcome'
+    return render(request, 'welcome.html', {'title': title})
 
-    return render(request,'welcome.html',{'images':images,'locations':locations})
+@login_required(login_url='/accounts/login/')
+def instaImages(request):
+    date = dt.date.today()
+    images = Image.get_all()
 
-
-
-def search_results(request):
-
-    if 'category' in request.GET and request.GET["category"]:
-        search_term = request.GET.get("category")
-        searched_categories = Image.search_by_category(search_term)
-    #     message = f"{search_term}"
-
-    #     return render(request, 'all-photos/search.html',{"message":message,"categories": searched_categories})
-
-    # else:
-    #     message = "You haven't searched for any term"
-    #     return render(request, 'all-photos/search.html',{"message":message})      
+    comments = Comment.get_comments()
+    return render(request, 'instagram.html', {"date": date, "images": images, "comments": comments})
 
 
+@login_required(login_url='/accounts/login/')
+def my_profile(request,profile_id):
+    date = dt.date.today()
+    profiles = Profile.objects.filter(id = profile_id)
+    return render(request, 'profile.html', locals())
 
-def location(request,location_id):
-    try:
-        locations = Location.objects.all()
-        location = Location.objects.get(id = location_id)
-        images = Image.objects.filter(image_location = location.id)
-    except:
-        raise Http404()
-    return render(request,'location.html',{'location':location,'images':images,'locations':locations})
+def explore(request):
+    date = dt.date.today()
+    profiles = Profile.get_profiles()
+    return render(request, 'explore.html', {"date": date, "profiles": profiles})
+
+
+def new_image(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewImageForm(request.POST, request.FILES)
+        if form.is_valid():
+
+            image = form.save(commit=False)
+            image.user = current_user
+
+            image.save()
+    else:
+        form = NewImageForm()
+    return render(request, 'new_image.html', {"form": form })
