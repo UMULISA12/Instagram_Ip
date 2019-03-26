@@ -1,49 +1,30 @@
+{% extends 'all-photos/base.html' %}
 {% load bootstrap3 %}
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>New Image</title>
-  {{form.media}}
-
-{% block styles %} {% bootstrap_css %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+{% block content %}
+{{block.super}}
+<div class="container">
+    <div class="row mt-5"></div>
+    <div class="row mt-5"></div>
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <div class="card card-info mt-5">
+        <div class="card-header">
+            <h2>Upload Image</h2>
+        </div>
+        <div class="card-body">
+                <form action="{%url 'post' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="form-group">
+                    <input type="submit" class="btn btn-info btn-sm" value="Post">
+                </div>
+                <input type="hidden" name="next" value="{{next}}">
+                </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+</div>
 {% endblock %}
-
-</head>
-
-<body>
-    <button onclick="goBack()" style="font-family: 'Gloria Hallelujah', cursive;">Go Back</button>
-    <br>
-    <br>
-    <br>
-
-    <script>
-    function goBack() {
-      window.history.back();
-    }
-    </script>
-    
-  <div class="container">
-    
-      <h1 style="font-family: 'Gloria Hallelujah', cursive;">Fill this form to create new post</h1>
-      <br>
-    <form  action="{%url 'new-image'%}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-
-    {% bootstrap_form form%}
-    <input type="submit" class="btn btn-success btn-lg" value="Post">
-  </form>
-
-   {% block scripts %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  {% bootstrap_javascript %}
-   {% endblock %}
-  </div>
-</body>
-</html>
