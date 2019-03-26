@@ -14,24 +14,12 @@ class Location(models.Model):
       self.save()
 
 
-
-
-class Category(models.Model):
-  category = models.CharField(max_length=30)
-
-  def __str__(self):
-      return self.category
-
-  def save_category(self):
-      self.save()
-
-
 class Image(models.Model):
   image = models.ImageField(upload_to='gallery/')
   image_name = models.CharField(max_length=25)
   image_description = models.TextField(max_length=300)
   image_location = models.ForeignKey(Location)
-  image_category = models.ForeignKey(Category)
+  
 
 
 
