@@ -1,15 +1,22 @@
-from django.conf import settings
 from django.conf.urls import url
+from . import views
+from django.conf import settings
 from django.conf.urls.static import static
 
-from . import views
 
 urlpatterns=[
-    url(r'^$', views.instaImages, name='instaImages'),
-    # url(r'^instaImages', views.instaImages, name='welcome'),
 
-    url(r'^what_profile/(?P<profile_id>\d+)', views.my_profile, name='profile'),
-    url(r'^explore_more/', views.explore, name='my_explore'),
-    url(r'^new/image$', views.new_image, name='new-image'),
-
+url('^$',views.instaImages,name='instaImages'),
+url(r'^profile/',views.my_profile, name='profile'),
+url(r'^search/',views.search_results,name='search'),
+url(r'^upload_image/',views.new_post,name='upload'),
+url(r'^edit/',views.edit_profile,name='edit_profile'),
+url(r'^comment/(?P<pk>\d+)',views.new_comment,name='comment'),
+url(r'^view_profile/(?P<pk>\d+)',views.view_your_profile,name='yourprofile'),
+url(r'^like/(?P<operation>.+)/(?P<pk>\d+)',views.like, name='like'),
 ]
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
