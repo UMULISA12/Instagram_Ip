@@ -2,12 +2,12 @@ import datetime as dt
 from django.http  import HttpResponse,Http404
 # from django.shortcuts import render
 from django.shortcuts import render,redirect
-from .models import Image,Location
+from .models import Image,Profile,Likes,Comment
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/register/')
 def welcome(request):
     images = Image.objects.all()
     locations=Location.objects.all()
