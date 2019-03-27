@@ -8,20 +8,17 @@
 
 <div class="container">
   
-
 <body style="background-color:#F2F3F4">
-    <div class="row">
+  <h1>Welcome to instagram application</h1>
+    <!-- <div class="row"> -->
 
   {% for photo in photos %}
       <div class="col-md-8">
-
 
         <div class="panel panel-default">
       <div class="panel panel-header">
       <p>  <img src="{{photo.profile_photo.url}}">
       <strong>{{photo.profile}}</strong></p>
-
-
     </div>
       <div class="panel panel-body">
 
@@ -34,32 +31,23 @@
           <br>
 
       <p>{{photo.caption}}</p>
-
-
     </div>
+
       <div class="panel panel-footer">
-
+   {% for comment in comments}
+  <p>{{comment.comments}}</p>
       </div>
+      
 
     </div>
 
     </div>
-
-
-
   {% empty %}
   <h2 class="text-center">There are no photos yet</h2>
 
   {% endfor %}
 
-
-
-
-</div>
-
-
-
-
+<!-- </div> -->
 </body>
 </div>
 
