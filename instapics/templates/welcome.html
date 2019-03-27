@@ -6,7 +6,7 @@
 
 <br>
 
-<div class="container">
+<div class="container-fluid">
   
 <body style="background-color:#F2F3F4">
 
@@ -17,10 +17,10 @@
 <!-- </div>
 </div> -->
 
-    <!-- <div class="row"> -->
-
+<div class="row" style="margin-left:80px;">
+  
   {% for photo in photos %}
-      <!-- <div class="col-md-8"> -->
+  <div class="col-md-3 container" >
 
         <div class="panel panel-default" style="width:300px;">
       <div class="panel panel-header">
@@ -48,7 +48,7 @@
 
     </div>
 
-    <!-- </div> -->
+  </div>
   {% empty %}
   <h2 class="text-center">There are no photos yet</h2>
 
@@ -59,3 +59,10 @@
 </div>
 
 {% endblock %}
+
+</div>
+
+
+
+
+
