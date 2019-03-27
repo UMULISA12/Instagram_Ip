@@ -1,13 +1,13 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-     <a class="navbar-brand" href="{% url 'instaImages' %}"><b>Insta</b>gram</a>
+     <a class="navbar-brand" href="{% url 'index' %}"><b>Insta</b>gram</a>
     </div>
 
-    <!-- Adding a search form  -->
+    Adding a search form 
     <div class="col-sm-4 col-md-4 navbar-right">
 
-      <form class="navbar-form" role="search" action="{% url 'search' %}">
+      <form class="navbar-form" role="search" action="{% url 'search_results' %}">
 
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search Article" name="article">
@@ -18,7 +18,7 @@
 
       </form>
     </div>
-    <!-- search form end -->
+    search form end
 
     <div class="col-sm-6 col-md-6">
       {% if user.is_authenticated %}
@@ -30,10 +30,10 @@
                 </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-              <a href="{%url 'instaImages'%}">Home</a>
+              <a href="{%url 'index'%}">Home</a>
             </li>
             <li>
-              <a href="{% url 'post'%}">Create Article</a>
+              <a href="{% url 'new-image'%}">Create post</a>
             </li>
             <li>
               <a href="/accounts/password/change">Change Password</a>
@@ -41,6 +41,20 @@
             <li>
               <a href="/logout">Logout</a>
             </li>
+            <li>
+              <a href="{%url 'profile' user.id%}"uk-icon="icon: user"uk-tooltip="Profile">Profile</a></li>
+            </li>
+
+            <li>
+              <a href="" >Following</a></li>
+            </li>
+            <li>
+                <a href="" >Followers</a></li>
+              </li>
+            <li>
+              <a href="" >Explore</a></li>
+            </li>
+
           </ul>
         </li>
       </ul>
@@ -51,8 +65,11 @@
       </li>
 
       {% endif %}
-    </div>
-
-
-  </div>
+    
+</div>
 </nav>
+
+
+
+
+

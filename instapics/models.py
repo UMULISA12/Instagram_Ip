@@ -1,94 +1,62 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 
-# Create your models here.
+User=get_user_model()
+
 
 class Profile(models.Model):
-    profilePic = models.ImageField(upload_to='profile/')
-    bio = models.CharField(max_length=60)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-
+    profile_pic=models.ImageField(upload_to='images/',blank=True)
+    bio=models.TextField()
+    user=models.ForeignKey(User)
+    
     def __str__(self):
         return self.bio
-
-    def save_profile(self):
-        self.save()
-
-    def delete_profile(self):
-        self.delete()
-
     @classmethod
-    def get_profile(cls):
-        profile = Profile.objects.all()
-        return profile
+    def my_profile(cls,user_id):
+        profiles=Profile.objects.get(id=user_id)
 
+        return profiles
     @classmethod
-    def find_profile(cls,search_term):
-        profile = cls.objects.filter(user__username__icontains=search_term)
-        return profile
-
-    @classmethod
-    def update_profile(cls,id,bio):
-        updated = Image.objects.filter(id=id).update(bio = bio)
-        return updated
+    def search_by_user(cls,query):
+        result = cls.objects.filter(user__username__icontains=query)
+        return result
 
 
 
-
+        
 class Image(models.Model):
-    image = models.ImageField(upload_to='uploads/')
-    caption = models.CharField(max_length = 60)
-    upload_date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
-    likes = models.PositiveIntegerField(default=0)
-
+    name=models.CharField(max_length=60)
+    caption=models.CharField(max_length=100)
+    gallery_image=models.ImageField(upload_to='images/')
+    Profile=models.ForeignKey(Profile)
+    url=models.CharField(max_length=100,blank=True)
+    editor = models.ForeignKey(User,on_delete=models.CASCADE)
     def __str__(self):
-        return self.caption
-    class Meta:
-        ordering = ['-upload_date']
+        return self.name
+    @classmethod
+    def my_image(cls):
+        images=Image.objects.all()
 
+        return images
     def save_image(self):
         self.save()
 
     def delete_image(self):
-        self.delete()
+        self.save()
 
-    @classmethod
-    def update_caption(cls,id,caption):
-        captioned = Image.objects.filter(id=id).update(caption = caption)
-        return captioned
+    def update_caption(self):
+        img= Image.objects.filter(id =1).update()
 
-    @classmethod
-    def get_images(cls):
-        image = Image.objects.all()
-        return image
-
-    @classmethod
-    def get_image_by_id(cls,id):
-        image = Image.objects.filter(id=Image.id)
-        return image
 
 class Comment(models.Model):
-    comments = models.CharField(max_length=60)
-    comment_date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User)
-    image = models.ForeignKey(Image,on_delete=models.CASCADE)
+    commented_by = models.ForeignKey(User)
+    for_image = models.ForeignKey(Image,related_name='comments')
+    created = models.DateTimeField(auto_now_add=True)
+    body=models.TextField(default='SOME STRING')
 
-    def __str__(self):
-        return self.comments
 
-    class Meta:
-        ordering = ['-comment_date']
-
-    def save_comment(self):
-        return self.save()
-
-    def delete_comment(self):
-        self.delete()
-
-    @classmethod
-    def get_comment(cls):
-        comment = Comment.objects.all()
-        return comment
+class Likes(models.Model):
+    likes=models.IntegerField()
+    image=models.ForeignKey(Image,null=True)

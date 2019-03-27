@@ -5,18 +5,21 @@ from django.conf.urls.static import static
 
 
 urlpatterns=[
+url('^$',views.index,name='index'),
+url(r'^imagedetails/(\d+)',views.imagedetails,name ='imagedetails'),
+url(r'^new/image$',views.new_image,name='new-image'),
+url(r'^new/comment$',views.new_comment,name='new-comment'),
 
-url('^$',views.instaImages,name='instaImages'),
-url(r'^profile/',views.my_profile, name='profile'),
-url(r'^search/',views.search_results,name='search'),
-url(r'^new_post/',views.new_post,name='post'),
-url(r'^edit/',views.edit_profile,name='edit_profile'),
-url(r'^comment/(?P<pk>\d+)',views.new_comment,name='comment'),
-url(r'^view_profile/(?P<pk>\d+)',views.view_your_profile,name='yourprofile'),
-url(r'^like/(?P<operation>.+)/(?P<pk>\d+)',views.like, name='like'),
+url(r'^create/profile$',views.create_profile,name='create-profile'),
+url(r'^profile/',views.profile,name='profile'),
+url(r'^profiledetails/(\d+)',views.profiledetails,name ='profiledetails'),
+
+url(r'^edit/profile$',views.edit_profile,name='edit-profile'),
+url(r'^search/', views.search_results, name='search_results')
+
+
+
 ]
 
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-
-

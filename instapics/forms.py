@@ -1,22 +1,21 @@
+
+from .models import Image,Comment,Profile
 from django import forms
-from .models import Image,Profile,Comment
 
-
-class NewPostForm(forms.ModelForm):
+class NewImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['user','likes','upload_date','profile']
+        exclude = ['url', 'comments','likes','name','Profile']
+        widgets = {}
 
 
-
-class EditProfileForm(forms.ModelForm):
+class CommentsForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        exclude = ['user']
+        model=Comment
+        fields=('commented_by','body','for_image')
 
 
-
-class CommentForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        exclude = ['user','comment_date','image',]
+        model=Profile
+        fields=('profile_pic','bio','user')

@@ -1,70 +1,63 @@
 {% extends 'all-photos/base.html' %}
 {% load bootstrap3 %}
-{% block content %}
-{{block.super}}
-<div class="container mt-5">
-<div class="row mt-3"></div>
-<div class="row mt-5">
-<div class="col-md-2 col-lg-2 col-xs-1 col-sm-1"></div>
-<div class="col-md-8 col-lg-8 col-xs-9 col-sm-9">
-<!-- <p><b>{{user}</b><a href="{% url 'edit_profile' %}" class="btn btn-info">  create a profile</a> -->
-</p>
-{% for img in images %}
-{% if img.image %}
-<div class="card">
-<div class="card-header">
-<img src="{{img.profile.profilePic.url}}" class="img-fluid rounded-circle" style="width:4%;height:4%">
-<a href="{% url 'profile' %}">{{img.user.username}}</a>
-    {% else %}
-<a href="{% url 'yourprofile' pk=img.user.id %}">{{img.user.username}}</a>
-{% endif %}
-</div>
 
-
-<div class="card-body">
-            <img src="{{img.image.url}}" alt="" class="img-fluid" style="width:100%; height:100%">
-            <hr>
-<div class="icons mt-3">
-                            <a id="like" href="{% url 'like' operation='like' pk=img.id%}" style="color:inherit;">
-<i class="far fa-heart fa-2x ml-4"></i>
-    </a>
-
-    <a href="{% url 'comment' pk=img.id %}" style="color:inherit;"><i class="far fa-comment fa-2x ml-4"></i></a>
-
-    <a href="#" style="color:inherit;"><i class="far fa-bookmark fa-2x float-right mr-4"></i></a>
-  </div>
-
-
-
-            <br>
-            {% if img.likes >= 1 %}
-            <div class="row">
-                    <h5 style="padding:8px; color:red;"><b>{{img.likes}} likes</b></h5>
+{%block content%}
+<div class="container ">
+        <h1 style="text-align:center;">Instagram</h1>
+    {% for image in images %}
+<div class="uk-card uk-card-default uk-width-1-2@m uk-margin-large   uk-margin-large-bottom">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+                {% if image.Profile.profile_pic %}
+                <a href="{%url 'profile' image.Profile.id%}"><img class="uk-border-circle" width="30" height="3
+                  0" src="{{image.Profile.profile_pic.url}}"></a>
+                {% endif %}
             </div>
+            <div class="uk-width-expand">
+                  <a href="{%url 'profile' image.Profile.id%}" class="uk-button uk-button-text">{{image.Profile.user}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="uk-card-body uk-card-media">
+      {% if image.gallery_image %}
+        <img src="{{image.gallery_image.url}}"  alt="Image" >
+        {% endif %}
 
 
-              {% endif %}
-              <div class="row">
-                      <h5 style="padding: 8px"><a href="{% url 'yourprofile' pk=img.user.id %}"><b>{{img.user.username}}</b></a> {{img.caption}}</h5>
-              </div>
-              <h6>{{img.upload_date | timesince}} ago</h6>
-              <hr>
+          <p><span uk-icon="heart"></span><span ><a href="{%url 'add_comment' image.id %}" uk-icon="comment" class="uk-margin-large-left"></a></span><span uk-icon="bookmark"class="uk-align-right"></span></p>
+            <p>{{image.likes}} likes</p>
 
-              {% for comment in comments %}
-              {% if img.id == comment.image.id %}
-              <p><b>{{comment.user}}</b>  {{comment.comments}}</p>
-              {% endif %}
-              {% endfor %}
-      </div>
-      <div class="card-footer">
-              <p><a href="{% url 'comment' pk=img.id %}">Add comment</a></p>
-      </div>
+            <p><span  class="uk-text-bold">{{image.Profile.user}}</span><span class="uk-margin-small-left">{{image.caption}}</span></p>
+          <div class="container-fluid">
+<a href="{%url 'add_comment' image.id %}">Add comment...</a>
+
+
 </div>
+{% for comment in image.comments.all %}
+<p><span  class="uk-text-bold">{{comment.commented_by}}</span><span  class="uk-margin-small-left">{{comment.body}}</span></p>
+
 {% endfor %}
-<br><br>
-{% endblock %}
+    </div>
+    <div class="uk-card-footer">
+
+    </div>
 </div>
-<div class="col-md-2 col-lg-2 col-xs-1 col-sm-1"></div>
+{%endfor%}
 </div>
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ {%endblock %}
