@@ -1,63 +1,66 @@
-{% extends 'all-photos/base.html' %}
-{% load bootstrap3 %}
 
-{%block content%}
-<div class="container ">
-        <h1 style="text-align:center;">Instagram</h1>
-    {% for image in images %}
-<div class="uk-card uk-card-default uk-width-1-2@m uk-margin-large   uk-margin-large-bottom">
-    <div class="uk-card-header">
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
-            <div class="uk-width-auto">
-                {% if image.Profile.profile_pic %}
-                <a href="{%url 'profile' image.Profile.id%}"><img class="uk-border-circle" width="30" height="3
-                  0" src="{{image.Profile.profile_pic.url}}"></a>
-                {% endif %}
-            </div>
-            <div class="uk-width-expand">
-                  <a href="{%url 'profile' image.Profile.id%}" class="uk-button uk-button-text">{{image.Profile.user}}</a>
-            </div>
-        </div>
+{%extends 'all-photos/base.html'%}
+
+{% block content %}
+{{block.super}}
+
+<br>
+
+<div class="container">
+  
+
+<body style="background-color:#F2F3F4">
+    <div class="row">
+
+  {% for photo in photos %}
+      <div class="col-md-8">
+
+
+        <div class="panel panel-default">
+      <div class="panel panel-header">
+      <p>  <img src="{{photo.profile_photo.url}}">
+      <strong>{{photo.profile}}</strong></p>
+
+
     </div>
-    <div class="uk-card-body uk-card-media">
-      {% if image.gallery_image %}
-        <img src="{{image.gallery_image.url}}"  alt="Image" >
-        {% endif %}
+      <div class="panel panel-body">
+
+      <a href="{% url 'imagedetails' photo.id %}">  <img src="{{photo.image.url}}" class="img-responsive" alt="Image" style="width:800px;height:800px;"></a>
 
 
-          <p><span uk-icon="heart"></span><span ><a href="{%url 'add_comment' image.id %}" uk-icon="comment" class="uk-margin-large-left"></a></span><span uk-icon="bookmark"class="uk-align-right"></span></p>
-            <p>{{image.likes}} likes</p>
+      <h4 class="btn btn-lg"><i class="glyphicon glyphicon-heart-empty" style="font-size:24px;color:black;"></i></h4>{{photo.likes}}
+          <a href="{%url 'new-comment'%}"> <h4 class="btn btn-lg" ><i class="glyphicon glyphicon-comment" style="font-size:24px;color:black;"></i> </h4> </a>{{photo.comments}}
 
-            <p><span  class="uk-text-bold">{{image.Profile.user}}</span><span class="uk-margin-small-left">{{image.caption}}</span></p>
-          <div class="container-fluid">
-<a href="{%url 'add_comment' image.id %}">Add comment...</a>
+          <br>
+
+      <p>{{photo.caption}}</p>
+
+
+    </div>
+      <div class="panel panel-footer">
+
+      </div>
+
+    </div>
+
+    </div>
+
+
+
+  {% empty %}
+  <h2 class="text-center">There are no photos yet</h2>
+
+  {% endfor %}
+
+
 
 
 </div>
-{% for comment in image.comments.all %}
-<p><span  class="uk-text-bold">{{comment.commented_by}}</span><span  class="uk-margin-small-left">{{comment.body}}</span></p>
 
-{% endfor %}
-    </div>
-    <div class="uk-card-footer">
 
-    </div>
-</div>
-{%endfor%}
+
+
+</body>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- {%endblock %}
+{% endblock %}

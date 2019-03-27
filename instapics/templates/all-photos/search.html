@@ -1,30 +1,40 @@
-{% extends 'all-photos/base.html' %}
+{%extends 'all-photos/base.html'%}
 {% block content %}
+
+<br>
+<br>
+<br>
+<br>
+
 <div class="container">
+  <body style="background-color:#F2F3F4">
 
   <div class="row">
-    {% if categories %}
-      <h2>Found {{categories|length }} of searched term {{message}}</h2>
+    {% if profiles%}
+      <h2>Found {{ profiles|length }} of searched term {{message}}</h2>
     {% else %}
-      <h2> Found 0 images for the search term {{message}}</h2>
+      <h2> Found 0 usernames for the search term {{message}}</h2>
     {% endif %}
 
   </div>
 
   <div class="row">
 
-  {% if categories %}
-    {% for image in categories %}
-    <div class="row">
-      <div class="col-md-3">
-          <img src="{{image.image.url}}" class="img-fluid" alt="Image" data-target="#{{image.id}}" width="300px" height="300px" style="padding:
-          10px; border-radius:10px;">
-          <h1>{{image.name}}</h1>
-          
+  {% if profiles %}
+    {% for profile in profiles %}
+      <div class="col-sm-6 col-md-6">
+        <div class="panel panel-default">
+          <div class="panel panel-header">
+            <a href="/profiledetails/{{profile.id}}"><h1>{{profile.user}}</h1></a>
       </div>
+    </div>
+  </div>
+      <!-- <div class="col-sm-6 col-md-6">
+        <img src="{{profile.profile_photo.url}}" class="img-responsive" alt="Image">
+      </div> -->
     {% endfor %}
   {% endif %}
-</div>
   </div>
+</body>
 </div>
 {% endblock %}

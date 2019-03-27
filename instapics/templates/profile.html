@@ -1,50 +1,51 @@
+{%extends 'all-photos/base.html'%}
 
-{% extends 'all-photos/base.html' %}
-
-{% followers request.user %}
-{% following request.user %}
-{%block content%}
-
-<div class="uk-card uk-card-default uk-width-1-1@m">
-
-    <div class="uk-card-header">
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
-            <div class="uk-width-auto">
-                {% if profiles.profile_pic %}
-                <img class="uk-border-circle" width="100" height="100" src="{{profiles.profile_pic.url}}">
-                    {% endif %}
-            </div>
-            <div class="uk-width-expand">
-                <h3 class="uk-card-title uk-margin-remove-bottom">{{profiles.user}}<span class="uk-margin-medium-left"><button class="uk-button uk-button-primary">Follow</button> </span></h3>
-                <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">{{profiles.bio}}</time></p>
-                <p class="uk-text-bold">Followers:</p>
-        {% for item in followers%}
-              <li>   {{item}}</li>
-              {%endfor%}
-            <p class="uk-text-bold">Following:</p>
-                {% for item in following%}
-                <li> {{item}} </li>
-                  {%endfor%}
-
-            </div>
-        </div>
-    </div>
-    </div>
+{% block content %}
+{{block.super}}
 
 
-     {%for image in my_images%}
+<br>
+
+<div class="container">
+  <body style="background-color:#FCFDFE">
 
 
-     <div class="uk-container uk-float-left uk-margin-large-left uk-margin">
+  <div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <h1>{{profile.user}}</h1>
+                   
+                
+                  </div>
+
+          <img src="{{profile.profile_photo.url}}" class="radius" class="img-responsive" alt="Image" style="width:200px;height:200px;">
+    <br>
+    <br>
+    <p>{{profile.bio}}</p>
+
+  </div>
+  
+</div>
+<br>
+
+  <div class="row">
+  <p class="text-center"><strong>Your posts</strong></p>
+
+    {% for photo in photos %}
+
+    <div class="col-md-4">
+
+      <img src="{{photo.image.url}}" class="img-responsive" alt="Image">
+
+      </div>
 
 
-        {% if image.gallery_image %}
-        <a href="{%url 'single_image' image.id%}">  <img src="{{image.gallery_image.url}}"  alt="Image"width="300px"height="300px"></a>
-          {% endif %}
-          </div>
+    {% empty %}
+    <h2 class="text-center">There are no photos yet</h2>
 
+    {% endfor %}
+  </div>
 
-
-
-          {%endfor%}
-         {%endblock %}
+</body>
+</div>
+{% endblock %}

@@ -8,16 +8,15 @@ from .forms import NewImageForm,NewProfileForm,NewCommentForm
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
-def index(request):
+def welcome(request):
     current_user=request.user
 
     photos=Image.get_photos()
     comments=Comment.get_comments()
-    # profile = Profile.objects.get(user=current_user)
     profiles = Profile.objects.all()
 
 
-    return render(request,'index.html',{"photos":photos,"profiles":profiles,"comments":comments})
+    return render(request,'welcome.html',{"photos":photos,"profiles":profiles,"comments":comments})
 
 def imagedetails(request,image_id):
     comments=Comment.objects.filter(image_id=image_id)
@@ -27,7 +26,7 @@ def imagedetails(request,image_id):
         image = Image.objects.get(id=image_id)
     except ObjectDoesNotExist:
          raise Http404()
-    return render(request,"image.html",{"image":image,"comments":comments})
+    return render(request,"post_details.html",{"image":image,"comments":comments})
 
 def profiledetails(request,profile_id):
     try:
@@ -38,6 +37,8 @@ def profiledetails(request,profile_id):
 
     return render(request,"profiledetails.html",{"profile":profile})
 
+
+
 def new_image(request):
     current_user=request.user
     if request.method == 'POST':
@@ -46,10 +47,11 @@ def new_image(request):
             image=form.save(commit=False)
             image.profile = current_user
             image.save()
-        return redirect('index')
+        return redirect('welcome')
     else:
         form=NewImageForm()
-    return render(request,'new_image.html',{"form":form})
+    return render(request,'new_post.html',{"form":form})
+
 
 def new_comment(request):
     current_user=request.user
@@ -62,10 +64,10 @@ def new_comment(request):
 
             comment.save()
 
-        return redirect('index')
+        return redirect('welcome')
     else:
         form=NewCommentForm()
-    return render(request,'new_comment.html',{"form":form})
+    return render(request,'add_comment.html',{"form":form})
 
 
 
@@ -94,7 +96,7 @@ def create_profile(request):
         return redirect('profile')
     else:
         form=NewProfileForm()
-    return render(request,'create_profile.html',{"form":form})
+    return render(request,'profile-create.html',{"form":form})
 
 
 def edit_profile(request):
@@ -122,4 +124,4 @@ def search_results(request):
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'search.html',{"message":message})
+        return render(request, 'all-photos/search.html',{"message":message})

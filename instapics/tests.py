@@ -1,71 +1,52 @@
 from django.test import TestCase
-from .models import Location,Image,Category
+from .models import Profile,Image,Comment
+import datetime as dt
+
+
 # Create your tests here.
-
-
-class LocationTestClass(TestCase):
-    #set up method
+class ProfileTestClass(TestCase):
+    #Set up method
     def setUp(self):
-        self.kigali=Location(name='Kigali')
-# Testing instance
-    def test_instance(self):
-        self.assertTrue(isinstance(self.kigali,Location))
-# Testing save method
-    def test_save_location(self):
-        self.kigali.save_location()
-        locations = Location.objects.all()
-        self.assertTrue(len(locations) > 0)
-
-# Testing delete method
-    def test_delete_location(self):
-        self.kigali.save_location()
-        self.kigali.delete_location()
-        locations=Location.objects.all()
-        self.assertTrue(len(locations)==0)
-
-
-
-class CategoryTestClass(TestCase):
-    def setUp(self):
-        self.food=Category(name='Food')
-
-    # Testing instance
-    def test_instance(self):
-        self.assertTrue(isinstance(self.food,Category))
-
-# Testing save method
-    def test_save_category(self):
-        self.food.save_category()
-        categories=Category.objects.all()
-        self.assertTrue(len(categories)>0)
-
-    def test_delete_category(self):
-        self.food.save_category()
-        self.food.delete_category()
-        categories=Category.objects.all()
-        self.assertTrue(len(categories)==0)
-
-
-class ImageTestClass(TestCase):
-    def setUp(self):
-        self.new_location=Location(name='kigali')
-        self.new_location.save_location()
-
-        self.new_category=Category(name='Food')
-        self.new_category.save_category()
-
-        self.new_image=Image(image_name='Test name',image_description='Test description',image_category=self.new_category,image_location=self.new_location)
-
-    def tearDown(self):
-        Location.objects.all().delete()
-        Category.objects.all().delete()
-        Image.objects.all().delete()
+        self.new_profile =Profile(profile_photo="'image.jpeg'",bio="God Above All")
 
     # Testing  instance
     def test_instance(self):
+        self.assertTrue(isinstance(self.new_profile,Profile))
+
+    #Testing Save Method
+    def test_save_method(self):
+        self.new_profile.save_profile()
+        profiles=Profile.objects.all()
+        self.assertTrue(len(profiles)>0)
+
+    def test_delete_method(self):
+        self.new_profile.save_profile()
+        self.new_profile.delete_profile()
+
+
+
+
+class ImageTestClass(TestCase):
+
+
+    def setUp(self):
+        self.new_image=Image(image="image.jpeg",name="Flower",caption="Naturelover",pub_date="two minutes ago",likes=4)
+
+    def test_instance(self):
         self.assertTrue(isinstance(self.new_image,Image))
 
-    def test_save_image(self):
+
+    def test_save_method(self):
+        '''
+        Function that tests whether an image is saved to database
+        '''
         self.new_image.save_image()
         images = Image.objects.all()
         self.assertTrue(len(images) > 0)
+
+    def test_delete_method(self):
+        '''
+        Function that tests whether an image can be deleted from the database
+        '''
+        self.new_image.save_image()
+        self.new_image.delete_image()
