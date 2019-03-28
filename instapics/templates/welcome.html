@@ -9,12 +9,12 @@
 
 <div class="container-fluid">
   
-<body style="background-color:#F2F3F4">
+<body>
 
   <!-- <div class="row">
     <div class="col-md-6"> -->
    
-    <h1 style="text-align:center; font-family: 'Baloo Chettan', cursive; font-family: 'Gloria Hallelujah', cursive;"><b>Welcome to instagram application</b></h1>
+    <h1 style="background-color:#c2d6d6; color:#3d5c5c; font-size:70px; text-align:center; font-family: 'Baloo Chettan', cursive; font-family: 'Gloria Hallelujah', cursive; margin-left:100px; margin-right:100px; "><b>Welcome to instagram application..</b></h1>
     <br>
     <br>
 <!-- </div>
@@ -36,8 +36,8 @@
       <a href="{% url 'imagedetails' photo.id %}">  <img src="{{photo.image.url}}" class="img-responsive" alt="Image" style="width:400px;height:400px;"></a>
       <!-- </div> -->
 
-      <h4 class="btn btn-lg"><i class="glyphicon glyphicon-heart-empty" style="font-size:24px;color:black;"></i></h4>{{photo.likes}}
-          <a href="{%url 'new-comment'%}"> <h4 class="btn btn-lg" ><i class="glyphicon glyphicon-comment" style="font-size:24px;color:black;"></i> </h4> </a>{{photo.comments}}
+      <h4 class="btn btn-lg"><i class="glyphicon glyphicon-heart" style="font-size:24px;color:rgb(43, 89, 133);"></i></h4>{{photo.likes}}
+          <a href="{%url 'new-comment'%}"> <h4 class="btn btn-lg" ><i class="glyphicon glyphicon-comment" style="font-size:24px;color:rgb(43, 89, 133);"></i> </h4> </a>{{photo.comments}}
 
           <br>
 
