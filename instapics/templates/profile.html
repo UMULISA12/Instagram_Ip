@@ -3,11 +3,16 @@
 {% block content %}
 {{block.super}}
 
-
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <br>
 <div class="container">
   <body style="background-color:#FCFDFE; ">
- <h1 style="text-align:right; color:beige;margin-left:50px;">My profile</h1> 
+    <img src="{{profile.profile_photo.url}}" class="radius" class="img-responsive" alt="Image" style="width:100px; height:100px; border-radius:50%; float: right; margin-left:-500px">
+    <br>
+    <br>
+    <br>
+    <br>
+ <h1 style="text-align:right; color:beige;margin-left:50px; font-family:'Indie Flower', cursive;">My profile</h1> 
 
   <div class="row" style="color:beige;" >
     
@@ -15,11 +20,7 @@
                     <h1 style="text-align:right;">{{profile.user}}</h1>
                    
                 
-                 
-          <img src="{{profile.profile_photo.url}}" class="radius" class="img-responsive" alt="Image" style="width:100px; height:100px; border-radius:50%; float: right; margin-left:-10px">
-    <br>
-    <br>
-    <p>{{profile.bio}}</p>
+    <p style="font-size:20px; text-align:right;"><q>{{profile.bio}}</q></p>
 
  
   
@@ -29,7 +30,7 @@
 
 
   <div class="row">
-  <p class="text-center"><strong>Your posts</strong></p>
+  <p class="text-center">our posts</p>
 
     {% for photo in photos %}
 
