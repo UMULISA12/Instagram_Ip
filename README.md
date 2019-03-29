@@ -9,7 +9,7 @@ Instagram Clone is a simple web application to show beautiful pictures. Users ge
 * Postgres
 * python virtualenv
 * Clone the Repo
-* Run the following command on the terminal: git clone https://github.com/UMULISA12/PhotoGallery-Ip.git
+* Run the following command on the terminal: git clone https://github.com/UMULISA12/Instagram_Ip.git
 * Install dependancies Install dependancies that will create an environment for the app to run pip3 install -r requirements.txt
 
 # Technologies used
