@@ -85,18 +85,6 @@ def profile(request):
 
 
 
-def create_profile(request):
-    current_user=request.user
-    if request.method == 'POST':
-        form =NewProfileForm(request.POST,request.FILES)
-        if form.is_valid():
-            profile=form.save(commit=False)
-            profile.user = current_user
-            profile.save()
-        return redirect('profile')
-    else:
-        form=NewProfileForm()
-    return render(request,'profile-create.html',{"form":form})
 
 
 def edit_profile(request):
@@ -125,3 +113,18 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-photos/search.html',{"message":message})
+
+
+
+def create_prfle(request):
+    current_user=request.user
+    if request.method == 'POST':
+        form =NewProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile=form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+        return redirect('profile')
+    else:
+        form=NewProfileForm()
+    return render(request,'profile-create.html',{"form":form})
